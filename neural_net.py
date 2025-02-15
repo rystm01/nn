@@ -17,18 +17,18 @@ class NeuralNet:
     self.learning_r = learning_rate
 
     # weights from input to hidden
-    self.wh_i = numpy.random.normal(0.0, pow(self.hidden_n, .5),  (self.hidden_n, self.input_n)) - .5
+    self.wh_i = numpy.random.normal(0.0, pow(self.input_n, .5),  (self.hidden_n, self.input_n)) - .5
 
     # weights from hidden to output
-    self.wh_o = numpy.random.normal(0.0, pow(self.output_n, .5),  (self.output_n, self.hidden_n)) - .5
+    self.wh_o = numpy.random.normal(0.0, pow(self.hidden_n, .5),  (self.output_n, self.hidden_n)) - .5
 
     self.activation_function = lambda x : scipy.special.expit(x)
 
 
 
   def train(self, inputs, targets):
-    inputs_ = numpy.array(inputs, ndmin=2)
-    targets_ = numpy.array(targets, ndmin=2)
+    inputs_ = numpy.array(inputs, ndmin=2).T
+    targets_ = numpy.array(targets, ndmin=2).T
 
     # predict
     hidden_inputs = numpy.dot(self.wh_i, inputs_)
@@ -40,7 +40,7 @@ class NeuralNet:
     out_err = targets_ - preds
     hidden_err = numpy.dot(self.wh_o.T, out_err)
     self.wh_o += self.learning_r * numpy.dot(out_err*preds*(1-preds), numpy.transpose(hidden_outputs))
-    self.wh_i += self.learning_r * numpy.dot(hidden_err*hidden_outputs*(1-hidden_outputs) * numpy.transpose(inputs_))
+    self.wh_i += self.learning_r * numpy.dot(hidden_err*hidden_outputs*(1-hidden_outputs), numpy.transpose(inputs_))
 
 
 
