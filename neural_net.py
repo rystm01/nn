@@ -6,7 +6,7 @@ import scipy.special
 # a three layer neural net
 class NeuralNet:
 
-  def __init__(self, input_n, output_n, hidden_n, learning_rate):
+  def __init__(self, input_n, output_n, hidden_n, learning_rate, internal_layers=1, internal_nc=[]):
     """ num input nodes, 
         num output nodes, 
         num hidden nodes, 
@@ -39,6 +39,8 @@ class NeuralNet:
     # find errors
     out_err = targets_ - preds
     hidden_err = numpy.dot(self.wh_o.T, out_err)
+
+    # adjust weigts
     self.wh_o += self.learning_r * numpy.dot(out_err*preds*(1-preds), numpy.transpose(hidden_outputs))
     self.wh_i += self.learning_r * numpy.dot(hidden_err*hidden_outputs*(1-hidden_outputs), numpy.transpose(inputs_))
 
