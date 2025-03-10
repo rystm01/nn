@@ -513,3 +513,83 @@ Makes predictions using the trained network.
 - Initializes weights using normal distribution
 - Uses sigmoid activation function
 - Implements basic backpropagation for training
+# Documentation for nn\main.ipynb
+
+This Jupyter notebook implements a neural network for digit recognition using the MNIST dataset. Here's a section-by-section breakdown:
+
+## Initial Setup
+- Imports the custom NeuralNet class and numpy
+- Creates a test neural network with 3 neurons in each layer
+- Demonstrates prediction functionality on a simple input
+
+## Data Loading
+- Loads MNIST training and test data from CSV files
+- Processes the raw data by:
+  - Converting strings to integers
+  - Separating labels from image data
+  - Scaling pixel values between 0.01 and 0.99
+  - Converting labels to one-hot encoded vectors
+
+## Neural Network Creation & Training
+- Creates a neural network with:
+  - 784 input neurons (28x28 pixels)
+  - 100 hidden neurons
+  - 10 output neurons (digits 0-9)
+- Trains the network for 10 epochs on the training data
+- Implements an accuracy calculation function
+
+## Testing & Evaluation
+- Prepares test data through similar preprocessing as training data
+- Makes predictions on test dataset
+- Calculates and displays accuracy (~82.94%)
+
+The code demonstrates the full pipeline of loading data, training a neural network, and evaluating its performance on a digit recognition task.
+# nn/neural_net.py
+
+This file implements a basic three-layer neural network using NumPy and SciPy.
+
+## Class: NeuralNet
+
+A neural network implementation with input, hidden, and output layers.
+
+### Constructor Parameters
+- `input_n`: Number of input nodes
+- `output_n`: Number of output nodes
+- `hidden_n`: Number of hidden nodes
+- `learning_rate`: Learning rate for weight updates
+- `internal_layers`: (Unused) Number of internal layers
+- `internal_nc`: (Unused) List for internal layer configuration
+
+### Attributes
+- `wh_i`: Weight matrix between input and hidden layer
+- `wh_o`: Weight matrix between hidden and output layer
+- `activation_function`: Sigmoid activation function using scipy.special.expit
+
+### Methods
+
+#### train(inputs, targets)
+Trains the neural network using backpropagation.
+
+**Parameters:**
+- `inputs`: Input data array
+- `targets`: Target output array
+
+**Process:**
+1. Forward propagation through the network
+2. Calculate errors at output and hidden layers
+3. Update weights using gradient descent
+
+#### predict(inputs)
+Makes predictions using the trained network.
+
+**Parameters:**
+- `inputs`: Input data array
+
+**Returns:**
+- Final output predictions after forward propagation
+
+### Technical Details
+- Uses NumPy for matrix operations
+- Implements sigmoid activation function
+- Weights are initialized using normal distribution
+- Uses gradient descent for optimization
